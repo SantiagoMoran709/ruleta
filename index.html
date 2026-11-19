@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Importa tu lista de Excel y elige un participante al azar.">
+  <meta name="theme-color" content="#0d0c12">
+  <title>Ruleta de sorteos</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script defer src="xlsx.full.min.js"></script>
+  <script defer src="app.js?v=3"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="shell">
+      <div class="brand-mark" aria-hidden="true">✦</div>
+      <div>
+        <h1>Ruleta de <em>sorteos</em></h1>
+        <p>Importa tu Excel o escribe los nombres para empezar el sorteo.</p>
+      </div>
+    </div>
+  </header>
+  <main class="shell layout">
+    <section class="panel stage" aria-label="Ruleta">
+      <div class="arena" aria-hidden="true">
+        <span class="spark spark-one">✧</span>
+        <span class="spark spark-two">✦</span>
+        <span class="spark spark-three">✧</span>
+        <span class="spark spark-four">✦</span>
+        <div class="wheel-wrap">
+          <div class="pointer"></div>
+          <div class="wheel-lights"></div>
+          <canvas id="wheel" width="960" height="960"></canvas>
+          <div class="hub">✦</div>
+        </div>
+      </div>
+      <div id="celebration" class="celebration" aria-hidden="true"></div>
+      <button id="spin" class="spin" disabled><span aria-hidden="true">✦</span><span id="spin-label">Girar ruleta</span></button>
+      <div class="result" id="result" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
+        <span id="result-label">Resultado</span>
+        <strong id="winner">Agrega participantes para empezar</strong>
+      </div>
+      <button id="remove-winner" class="remove-winner" type="button" hidden>Quitar ganador de la lista</button>
+    </section>
+    <aside class="sidebar" aria-label="Configuración del sorteo">
+      <section class="panel upload">
+        <div class="section-heading"><span class="section-icon" aria-hidden="true">▤</span><h2>Archivo de Excel</h2></div>
+        <p>Elige la hoja y la columna que contienen los nombres.</p>
+        <label class="picker" for="file">
+          <input type="file" id="file" accept=".xlsx,.xls">
+          <span aria-hidden="true" class="file-icon">＋</span>
+          <span><strong id="file-title">Seleccionar archivo</strong><small id="file-type">Formatos .xlsx y .xls</small></span>
+        </label>
+        <p id="error" role="alert" hidden></p>
+        <fieldset id="settings" hidden>
+          <label for="sheet">Hoja</label>
+          <select id="sheet"></select>
+          <label for="column">Columna</label>
+          <select id="column"></select>
+          <label class="check"><input type="checkbox" id="header" checked> La primera fila contiene encabezados</label>
+        </fieldset>
+        <a class="template" href="Participantes.xlsx" download>Descargar Excel de ejemplo</a>
+      </section>
+      <section class="panel participants">
+        <div class="list-heading"><div class="section-heading"><span class="section-icon" aria-hidden="true">☷</span><h2>Participantes</h2></div><span id="count" aria-live="polite">0</span></div>
+        <form id="add-form">
+          <label for="participant-name">Agregar participante</label>
+          <div class="add-field">
+            <input id="participant-name" type="text" placeholder="Nombre del participante" required maxlength="250" autocomplete="off">
+            <button id="add" type="submit">Agregar</button>
+          </div>
+        </form>
+        <p id="empty">La lista está vacía.</p>
+        <ul id="names" hidden></ul>
+        <button id="export" class="template export" type="button" disabled>Descargar lista en Excel</button>
+        <p id="export-error" role="alert" hidden></p>
+      </section>
+    </aside>
+  </main>
+</body>
+</html>
